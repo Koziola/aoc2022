@@ -6,11 +6,16 @@ f = open(os.path.join(parent_dir, "day3_input.txt"), "r")
 
 
 def find_common(triple):
+    seen = set({})
     for i in triple[0]:
+        if i in seen:
+            continue
         for j in triple[1]:
             for k in triple[2]:
                 if i == j and j == k:
                     return i
+                else:
+                    seen.add(i)
 
 
 def find_priority(char):

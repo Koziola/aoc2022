@@ -1,7 +1,6 @@
 import pathlib
 import os
 import re
-from collections import deque
 
 parent_dir = pathlib.Path(__file__).parent.resolve()
 f = open(os.path.join(parent_dir, "day5_input.txt"), "r")
@@ -18,7 +17,7 @@ def parse_setup(setup):
         queue_idx = 0
         while idx < len(line):
             if queue_idx > len(queues) - 1:
-                queues.append(deque())
+                queues.append([])
 
             current = line[idx]
 
@@ -54,9 +53,16 @@ for instruction in instructions.split("\n"):
 
     src_queue = queues[src - 1]
     dst_queue = queues[dst - 1]
-    for i in range(quantity):
-        crate = src_queue.pop()
-        dst_queue.append(crate)
+
+    crane = src_queue[-quantity:]
+    del src_queue[-quantity:]
+    dst_queue.extend(crane)
+
+    # part 1
+    # for i in range(quantity):
+        # crate = src_queue.pop()
+        # dst_queue.append(crate)
+
 
 result = ""
 for queue in queues:
